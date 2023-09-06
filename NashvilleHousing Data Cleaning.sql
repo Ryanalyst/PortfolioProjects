@@ -97,10 +97,10 @@ From NashvilleHousing
 
 In SQL Server, you can use the PARSENAME() function to return part of
 an object name. For example, you can use it to return the schema part
-(or any other part) of a four part name such as server.schema.db.object.
+(or any other part) of a four-part name such as server.schema.db.object.
 We can also use it to return specific parts of the owner address column!
 Normally the command will return values until it finds a period.
-Since each section in the address column is seperated by a comma, we can 
+Since each section in the address column is separated by a comma, we can 
 use the REPLACE command within the parsename command itself to instead look
 for a comma and return all of the values up till that comma :D For example:
 
@@ -109,10 +109,10 @@ PARSENAME('object_name' , object_piece(this has to be a 1,2,3, or 4) )
 From table_name
 
 Doing that will return specific pieces in our address column. Additionally,
-the values it returns is backwards from what you'd expect. So using 1 for the
+the values it returns are backward from what you'd expect. So using 1 for the
 object piece will actually return the last set of data in the column. If you
 want to return the first set, you need to start with 3, since there are 3
-seperate commas in the owner address column.*/
+separate commas in the owner address column.*/
 
 
 Select OwnerAddress
@@ -206,8 +206,7 @@ DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress
 ALTER TABLE NashvilleHousing
 DROP COLUMN SaleDate
 
---Never Delete data from your raw data that you import. You'll typically do this 
---with views or temp tables
+--It's not good practice to delete RAW data, this is typically done with views and temp tables
 
 Select *
 From NashvilleHousing
