@@ -36,13 +36,6 @@ JOIN NashvilleHousing b on a.ParcelID = b.ParcelID
 and a.[UniqueID ] <> b.[UniqueID ]
 where a.PropertyAddress is null
 
-/*The above query allows us to see which data contains a null for their
-address. We then can join the table with itself and then search for data
-that shares a parcel id, but not a unique ID. We do this because, rows 
-that share a ParcelID but not a unique ID are very likely to share the
-same address. So we can then update the data where the address is null
-with the addresses we found using the above query.*/
-
 UPDATE a
 SET PropertyAddress = ISNULL(a.PropertyAddress, b.PropertyAddress)
 From NashvilleHousing a
@@ -60,10 +53,6 @@ From NashvilleHousing
 Select
 SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress)-1) AS Address
 From NashvilleHousing
-
-/* The above code will return the Property address value up until it 
-discovers a comma. This is thanks to the CHARINDEX command which searches
-for the character in quotations.Then the -1 will delete the comma for us*/
 
 
 Select
@@ -94,26 +83,6 @@ From NashvilleHousing
 
 ---------------------------------------------------------------------------------------
 /*Splitting owner address into address, city, state via Parsename.
-
-In SQL Server, you can use the PARSENAME() function to return part of
-an object name. For example, you can use it to return the schema part
-(or any other part) of a four-part name such as server.schema.db.object.
-We can also use it to return specific parts of the owner address column!
-Normally the command will return values until it finds a period.
-Since each section in the address column is separated by a comma, we can 
-use the REPLACE command within the parsename command itself to instead look
-for a comma and return all of the values up till that comma :D For example:
-
-Select 
-PARSENAME('object_name' , object_piece(this has to be a 1,2,3, or 4) )
-From table_name
-
-Doing that will return specific pieces in our address column. Additionally,
-the values it returns are backward from what you'd expect. So using 1 for the
-object piece will actually return the last set of data in the column. If you
-want to return the first set, you need to start with 3, since there are 3
-separate commas in the owner address column.*/
-
 
 Select OwnerAddress
 From NashvilleHousing
