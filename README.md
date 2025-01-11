@@ -1,2 +1,2 @@
 # PortfolioProjects
-Code for projects that will be added to my website as a showcase of my ability with various tools
+Here you will find a compilation of my different projects I've worked on. My purpose for creating them is to showcase my abilities with various tools and programs to potential employers. These include a variety of projects that deal with SQL, Tableau, Excel, and more. It's true that I do not have any prior job experience in the field, but it is my hope that my portfolio will be a good starting point to show I know the skills that I claim I do.
