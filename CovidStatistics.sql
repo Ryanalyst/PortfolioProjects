@@ -1,12 +1,6 @@
-
 SELECT *
-  FROM CovidDeaths
-  --WHERE continent is not null
-  ORDER BY 3,4;
-
-  --SELECT *
-  --FROM PortfolioProject.dbo.CovidVaccinations
-  --ORDER BY 3,4
+FROM CovidDeaths
+ORDER BY 3,4;
 
 -- Select Data that we are going to be using
 
@@ -16,7 +10,7 @@ ORDER BY 1,2;
 
 
 -- Looking at Total Cases vs Total Deaths
--- Shows likelihood of dying if you contract covid in the United States
+-- Shows the likelihood of dying if you contract covid in the United States
 SELECT Location, date, total_cases, total_deaths, 
 ROUND((CAST(total_deaths AS FLOAT)/CAST(total_cases AS FLOAT)*100),2) AS DeathPercentage
 FROM CovidDeaths
@@ -29,7 +23,7 @@ FROM CovidDeaths
 
 
 -- Looking at Total Cases vs Population
--- Shows what percentage of population got covid
+-- Shows what percentage of the population got covid
 SELECT Location, date, Population, total_cases, (total_cases/population)*100 As CovidPercentage
 FROM CovidDeaths
 ORDER BY 1,2;
