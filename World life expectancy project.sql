@@ -290,22 +290,22 @@ Group by Country
 
 /*I'm seeing a few 0s in life expectancy which was expected based on earlier exploration, but I'm also seeing quite a few 0s in the GDP column. A lot of the countries with 0s appear to be smaller countries, so it could be that some of these countries refused to give up the data to whoever was collecting the data at the time. Nevertheless, I wanted to acknowledge it and make note that the countries with 0s will be ignored going forward.*/
 
-Select Country, ROUND(AVG(`life expectancy`),1) as Avg_Life_Expectancy, ROUND(AVG(GDP),1) as Avg_GDP
-From world_life_expectancy
-Group by Country
-Having Avg_Life_Expectancy <> 0 
-AND Avg_GDP <> 0
-Order by 3 asc
+SELECT Country, `Life Expectancy`, GDP
+FROM world_life_expectancy.world_life_expectancy
+WHERE Year = 2022 AND `Life Expectancy` <> 0 
+AND GDP <> 0
+ORDER BY 3
 ;
 
-/*Looking back at our avg life expectancy from a previous query, I can see that the avg life expectancy was about 68 years. So any country below that would be behind the worldwide average. while scrolling through the data, I noticed that with the exception of 3 or 4 countries, every country with an avg GDP in the last 15 years (I believe this is per capita, but I'm not certain) below the 1400~ their live expectancy is below that 68 average and the opposite is true for those above that threshold. I was curious about why I wasn't finding the United States on the table and I figured out that the GDP for America is filled with a 0. So it was filtered out by my query. I'll be able to figure out the correlation between GDP and life expectancy once I pull this data into Tableau. But for now, we can somewhat see this correlation more easily through the use of Case statements. I'll add up the number of countries with a GDP higher than 1200 and their avg life expectancy, along with countries with a lower GDP than 1200 and their avg life expectancy.*/
+/*Looking back at our avg life expectancy from a previous query, I can see that the avg life expectancy was about 68 years. So any country below that would be behind the worldwide average. while scrolling through the data, I noticed that with a few exceptions, the countries below the 1800 GDP generally had a lower life expectancy than countries above 1800. I was curious about why I wasn't finding the United States on the table and I figured out that the GDP for America is filled with a 0. So it was filtered out by my query. For now, we can somewhat see this correlation more easily through the use of Case statements. I'll add up the number of countries with a GDP higher than 1800 and their life expectancy, along with countries with a lower GDP than 1800 and their life expectancy.*/
 
 Select 
-SUM(Case When GDP >= 1200 Then 1 Else 0 END) High_GDP_Count,
-ROUND(AVG(Case When GDP >= 1200 Then `life expectancy` Else NULL End),2) High_GDP_Life_Expectancy,
-SUM(Case When GDP <= 1200 Then 1 Else 0 END) Low_GDP_Count,
-ROUND(AVG(Case When GDP <= 1200 Then `life expectancy` Else NULL End),2) Low_GDP_Life_Expectancy
+SUM(Case When GDP >= 1800 Then 1 Else 0 END) High_GDP_Count,
+ROUND(AVG(Case When GDP >= 1800 Then `life expectancy` Else NULL End),2) High_GDP_Life_Expectancy,
+SUM(Case When GDP <= 1800 Then 1 Else 0 END) Low_GDP_Count,
+ROUND(AVG(Case When GDP <= 1800 Then `life expectancy` Else NULL End),2) Low_GDP_Life_Expectancy
 From world_life_expectancy
+Where Year = 2022
 ;
 
 /*I messed around with the GDP number to use in the case statement a few times starting at 1400 and then lowering it until I got to a good general middle point in the data. From the data, we can see that the upper half of the countries with higher GDP tend to have a much higher life expectancy than those with a lower GDP. The gap is almost 10 years between the two.*/
